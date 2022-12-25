@@ -7,7 +7,9 @@
 
 .app {
   background-color: #3a393f;
+  color: #f8f8f8;
 }
 .light {
   background-color: #f8f8f8;
+  color: #3a393f;
 }
