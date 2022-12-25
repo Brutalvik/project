@@ -1,8 +1,16 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react';
+import styles from './App.module.css';
 
-function App() {
-  return <div className='app'></div>;
-}
+//COMPONENTS
+import Header from './components/Header';
+
+const App = () => {
+  const [theme, setTheme] = useState(false);
+  return (
+    <div className={theme ? styles.app : styles.light}>
+      <Header setTheme={setTheme} />
+    </div>
+  );
+};
 
 export default App;
