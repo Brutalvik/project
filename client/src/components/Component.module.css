@@ -1,0 +1,21 @@
+/* HEADER */
+.toggle_button {
+  float: right;
+  margin: 10px;
+}
+
+.menuitem {
+  border-radius: 10px;
+  text-align: center;
+  user-select: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* LOGO */
+.logo {
+  width: 60%;
+  height: 35%;
+  margin: 2%;
+}
