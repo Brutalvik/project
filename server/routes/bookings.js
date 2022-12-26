@@ -5,13 +5,14 @@ const router = express.Router();
 const bookingRequest = mongoose.model('bookingrequest', bookingRequestSchema);
 
 router.post('/', (req, res) => {
+  console.log(`BOOKING REQUEST POST API HIT`);
   const newBookingRequest = {
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
     gender: req.body.gender,
-    startDate: new Date(req.body.startDate),
-    endDate: new Date(req.body.endDate),
+    bookingStartDate: new Date(req.body.startDate),
+    bookingEndDate: new Date(req.body.endDate),
   };
 
   bookingRequest.collection.insertOne(newBookingRequest, (error, result) => {

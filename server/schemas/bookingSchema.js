@@ -5,6 +5,6 @@ export const bookingRequestSchema = new Schema({
   email: String,
   phone: String,
   gender: String,
-  startDate: Date,
-  endDate: Date,
+  bookingStartDate: Date,
+  bookingEndDate: Date,
 });

@@ -9,7 +9,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import DatePicker from './DatePicker';
+import DatePicker from '../UI/DatePicker';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 
@@ -27,21 +27,21 @@ import { bookingRequestSchema } from '../schemas/schema';
 import ValidationError from '../UI/ValidationError';
 
 //REDUX
-import { useSelector, useDispatch } from 'react-redux';
-import { getBooking } from '../state/bookingSlice';
+import { useDispatch } from 'react-redux';
+import { postBookingRequest } from '../state/bookingRequestThunk';
 
 const BookingRequest = () => {
   const dispatch = useDispatch();
-  useSelector((state) => console.log(state));
 
   //SUBMIT HANDLER
   const onSubmit = (values, actions) => {
     const bookingData = {
       ...values,
-      bookingStartDate: JSON.stringify(bookingStartDate.$d),
-      bookingEndDate: JSON.stringify(bookingEndDate.$d),
+      bookingStartDate: bookingStartDate.$d,
+      bookingEndDate: bookingEndDate.$d,
     };
-    dispatch(getBooking(bookingData));
+    console.log('sent data : ', bookingData);
+    dispatch(postBookingRequest(bookingData));
     actions.resetForm();
   };
 
