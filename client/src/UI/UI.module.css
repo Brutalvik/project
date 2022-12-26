@@ -10,3 +10,8 @@
   grid-gap: 20px;
   justify-content: space-evenly;
 }
+
+.error_message {
+  color: rgb(205, 2, 2);
+  margin: -5% 0% -10% 0%;
+}

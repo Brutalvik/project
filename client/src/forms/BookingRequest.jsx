@@ -1,6 +1,7 @@
 import React from 'react';
 //LOGICAL FUNCTIONS
 import { blockInvalidChar } from '../functions/logicalfunctions';
+
 //MUI
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
@@ -9,7 +10,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import DatePicker from './DatePicker';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SendIcon from '@mui/icons-material/Send';
 
 //CSS
 import styles from './Forms.module.css';
@@ -21,16 +23,34 @@ import { labelValues, inialFormValues } from '../model/initialValues.js';
 import { useFormik } from 'formik';
 import { bookingRequestSchema } from '../schemas/schema';
 
-const onSubmit = (values) => {
-  console.log(values);
-};
+//UI
+import ValidationError from '../UI/ValidationError';
+
+//REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { getBooking } from '../state/bookingSlice';
 
 const BookingRequest = () => {
+  const dispatch = useDispatch();
+  useSelector((state) => console.log(state));
+
+  //SUBMIT HANDLER
+  const onSubmit = (values, actions) => {
+    const bookingData = {
+      ...values,
+      bookingStartDate: JSON.stringify(bookingStartDate.$d),
+      bookingEndDate: JSON.stringify(bookingEndDate.$d),
+    };
+    dispatch(getBooking(bookingData));
+    actions.resetForm();
+  };
+
   const { startLabel, endLabel } = labelValues;
   const {
     values,
     errors,
     touched,
+    isSubmitting,
     handleChange,
     handleBlur,
     setFieldValue,
@@ -51,8 +71,6 @@ const BookingRequest = () => {
     bookingEndDate,
   } = values;
 
-  console.log('FORM ERRORS : ', errors);
-
   return (
     <form className={styles.request_container} onSubmit={handleSubmit}>
       <TextField
@@ -64,6 +82,11 @@ const BookingRequest = () => {
         onChange={handleChange}
         onBlur={handleBlur}
       />
+      <ValidationError
+        isError={errors.name}
+        isTouched={touched.name}
+        errorMessage={errors.name}
+      />
       <TextField
         error={errors.email && touched.email && true}
         id='email'
@@ -72,6 +95,11 @@ const BookingRequest = () => {
         value={email}
         onChange={handleChange}
         onBlur={handleBlur}
+      />
+      <ValidationError
+        isError={errors.email}
+        isTouched={touched.email}
+        errorMessage={errors.email}
       />
       <TextField
         error={errors.phone && touched.phone && true}
@@ -89,9 +117,14 @@ const BookingRequest = () => {
         onChange={handleChange}
         onBlur={handleBlur}
       />
+      <ValidationError
+        isError={errors.phone}
+        isTouched={touched.phone}
+        errorMessage={errors.phone}
+      />
       <FormControl>
         <FormLabel
-          error={errors.gender && touched.gender && true}
+          error={errors.gender && true}
           id='demo-radio-buttons-group-label'
         >
           Gender
@@ -123,25 +156,50 @@ const BookingRequest = () => {
           />
         </RadioGroup>
       </FormControl>
+      <ValidationError
+        isError={errors.gender}
+        isTouched={touched.gender}
+        errorMessage={errors.gender}
+      />
       <DatePicker
         error={errors.bookingStartDate && touched.bookingStartDate && true}
         label={startLabel}
         value={bookingStartDate}
-        onchange={(newDate) => {
+        onchange={async (newDate) => {
+          await setFieldValue('bookingEndDate', '');
           setFieldValue('bookingStartDate', newDate.$d);
         }}
         onBlur={handleBlur}
+      />
+      <ValidationError
+        isError={errors.bookingStartDate}
+        isTouched={touched.bookingStartDate}
+        errorMessage={errors.bookingStartDate}
       />
       <DatePicker
         error={errors.bookingEndDate && touched.bookingEndDate && true}
         label={endLabel}
         value={bookingEndDate}
-        onchange={(newDate) => {
+        onchange={async (newDate) => {
+          await setFieldValue('bookingEndDate', '');
           setFieldValue('bookingEndDate', newDate.$d);
         }}
         onBlur={handleBlur}
       />
-      <Button variant='contained'>Book</Button>
+      <ValidationError
+        isError={errors.bookingEndDate}
+        isTouched={touched.bookingEndDate}
+        errorMessage={errors.bookingEndDate}
+      />
+      <LoadingButton
+        loading={isSubmitting}
+        loadingPosition='start'
+        startIcon={<SendIcon />}
+        variant='outlined'
+        type='submit'
+      >
+        Book
+      </LoadingButton>
     </form>
   );
 };
