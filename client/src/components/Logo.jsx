@@ -11,7 +11,7 @@ import dark from '../assets/dark.png';
 import { useSelector } from 'react-redux';
 
 const Logo = () => {
-  const theme = useSelector((state) => console.log(state));
+  const theme = useSelector((state) => state.global.theme);
 
   return (
     <div>
