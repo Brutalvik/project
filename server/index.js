@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 
 //ROUTE IMPORTS
 import adminRoutes from './routes/admin.js';
-
+import bookingRoutes from './routes/bookings.js';
 //CONFIGURATION
 dotenv.config();
 const app = express();
@@ -17,9 +17,19 @@ app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS');
+  next();
+});
 
 //ROUTES
-app.use('/admin', adminRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/bookingrequest', bookingRoutes);
 
 //mongoose deprecation warning fix
 mongoose.set('strictQuery', false);
