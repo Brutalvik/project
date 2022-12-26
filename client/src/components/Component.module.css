@@ -1,10 +1,13 @@
-/* HEADER */
-.toggle_button {
-  float: right;
-  margin: 10px;
+/* LOGO */
+.logo {
+  width: 40%;
+  height: 35%;
+  margin: 2% 0% 0% 5%;
+  cursor: pointer;
 }
 
-.menuitem {
+.menuitem_light,
+.menuitem_dark {
   border-radius: 10px;
   text-align: center;
   user-select: none;
@@ -13,9 +16,63 @@
   padding: 0;
 }
 
-/* LOGO */
-.logo {
-  width: 60%;
-  height: 35%;
-  margin: 2%;
+.menuitem_light:hover {
+  background-color: #3a393f;
+  color: #f8f8f8;
+}
+
+.menuitem_dark:hover {
+  background-color: #f8f8f8;
+  color: #3a393f;
+}
+
+.whatsapp_container:hover,
+.whatsapp_container:active {
+  background-color: rgb(50, 146, 63);
+  color: #f8f8f8;
+}
+
+.whatsapp_container:active {
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+.contact {
+  float: left;
+  width: 70%;
+  height: 45%;
+}
+
+.switch {
+  float: right;
+}
+
+.toggle_button {
+  float: right;
+  margin: 10px;
+}
+
+/* WHATSAPP LOGO */
+.whatsapp_container {
+  display: inline-grid;
+  grid-template-columns: 4fr 8fr;
+  margin: 3% 0% 0% 0%;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 90%;
+}
+
+.whatsapp_container:active {
+  transform: translateY(3px);
+}
+
+.whatsapp {
+  width: 50%;
+  height: auto;
+}
+
+.contact_text {
+  width: 100%;
+  margin: 4% 0% 5% -15%;
+  user-select: none;
 }
