@@ -3,6 +3,7 @@ import styles from './App.module.css';
 
 //COMPONENTS
 import Header from './components/Header';
+import Banner from './components/Banner';
 
 //REDUX
 import { useDispatch } from 'react-redux';
@@ -20,6 +21,7 @@ const App = () => {
   return (
     <div className={theme ? styles.app : styles.light}>
       <Header setTheme={setTheme} />
+      <Banner />
     </div>
   );
 };
