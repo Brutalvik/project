@@ -1,5 +1,6 @@
 import React from 'react';
-
+//LOGICAL FUNCTIONS
+import { blockInvalidChar } from '../functions/logicalfunctions';
 //MUI
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
@@ -17,18 +18,27 @@ import styles from './Forms.module.css';
 import { labelValues, inialFormValues } from '../model/initialValues.js';
 
 //FORMIK
-import { Formik, useFormik } from 'formik';
+import { useFormik } from 'formik';
+import { bookingRequestSchema } from '../schemas/schema';
+
+const onSubmit = (values) => {
+  console.log(values);
+};
 
 const BookingRequest = () => {
   const { startLabel, endLabel } = labelValues;
   const {
     values,
+    errors,
+    touched,
     handleChange,
     handleBlur,
     setFieldValue,
     handleSubmit,
   } = useFormik({
     initialValues: inialFormValues,
+    validationSchema: bookingRequestSchema,
+    onSubmit,
   });
 
   //DESTRUCTURES
@@ -41,11 +51,12 @@ const BookingRequest = () => {
     bookingEndDate,
   } = values;
 
-  console.log('FORM VALUES : ', values);
+  console.log('FORM ERRORS : ', errors);
 
   return (
-    <Formik className={styles.request_container} onSubmit={handleSubmit}>
+    <form className={styles.request_container} onSubmit={handleSubmit}>
       <TextField
+        error={errors.name && touched.name && true}
         id='name'
         label='Name'
         variant='outlined'
@@ -54,6 +65,7 @@ const BookingRequest = () => {
         onBlur={handleBlur}
       />
       <TextField
+        error={errors.email && touched.email && true}
         id='email'
         label='Email'
         variant='outlined'
@@ -62,17 +74,30 @@ const BookingRequest = () => {
         onBlur={handleBlur}
       />
       <TextField
+        error={errors.phone && touched.phone && true}
         id='phone'
         label='Phone Number'
+        type='number'
+        onKeyDown={blockInvalidChar}
+        onInput={({ target }) => {
+          target.value = Math.max(0, parseInt(target.value))
+            .toString()
+            .slice(0, 13);
+        }}
         variant='outlined'
         value={phone}
         onChange={handleChange}
         onBlur={handleBlur}
       />
       <FormControl>
-        <FormLabel id='demo-radio-buttons-group-label'>Gender</FormLabel>
+        <FormLabel
+          error={errors.gender && touched.gender && true}
+          id='demo-radio-buttons-group-label'
+        >
+          Gender
+        </FormLabel>
+
         <RadioGroup
-          aria-labelledby='demo-radio-buttons-group-label'
           value={gender}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -99,6 +124,7 @@ const BookingRequest = () => {
         </RadioGroup>
       </FormControl>
       <DatePicker
+        error={errors.bookingStartDate && touched.bookingStartDate && true}
         label={startLabel}
         value={bookingStartDate}
         onchange={(newDate) => {
@@ -107,6 +133,7 @@ const BookingRequest = () => {
         onBlur={handleBlur}
       />
       <DatePicker
+        error={errors.bookingEndDate && touched.bookingEndDate && true}
         label={endLabel}
         value={bookingEndDate}
         onchange={(newDate) => {
@@ -115,7 +142,7 @@ const BookingRequest = () => {
         onBlur={handleBlur}
       />
       <Button variant='contained'>Book</Button>
-    </Formik>
+    </form>
   );
 };
 

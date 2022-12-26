@@ -14,6 +14,6 @@ export const inialFormValues = {
   email: '',
   phone: '',
   gender: '',
-  bookingStartDate: '',
-  bookingEndDate: '',
+  bookingStartDate: labelValues.startDate,
+  bookingEndDate: labelValues.startDate,
 };

@@ -17,4 +17,5 @@ export const bookingRequestSchema = yup.object().shape({
   bookingEndDate: yup.date().required('Please select end Date/Time'),
 });
 
-const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+// const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+//min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit
